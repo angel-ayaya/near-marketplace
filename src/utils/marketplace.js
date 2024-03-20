@@ -6,7 +6,8 @@ const GAS = 100000000000000;
 export function createProduct(product) {
   product.id = uuid4();
   product.price = parseNearAmount(product.price + "");
-  return window.contract.set_products({ product }); // set_product for the Rust contract
+  console.log({ product });
+  return window.contract.set_product({ "payload" : product }); // set_product for the Rust contract
 }
 
 export function getProducts() {
@@ -14,5 +15,5 @@ export function getProducts() {
 }
 
 export async function buyProduct({ id, price }) {
-  await window.contract.buy_product({ productId: id }, GAS, price); // buy_product for the Rust contract
+  await window.contract.buy_product({ product_id: id }, GAS, price); // buy_product for the Rust contract
 }

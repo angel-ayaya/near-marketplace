@@ -3,6 +3,10 @@ import { createRoot } from 'react-dom/client'; // Importa createRoot
 import App from './App';
 import { initializeContract } from "./utils/near";
 
+import "bootstrap";
+import "bootstrap-icons/font/bootstrap-icons.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+
 // Inicializa tu contrato y luego la aplicación
 window.nearInitPromise = initializeContract()
   .then(() => {
@@ -16,4 +20,3 @@ window.nearInitPromise = initializeContract()
   })
   .catch(console.error);
 
-  
