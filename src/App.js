@@ -1,24 +1,34 @@
-import logo from './logo.svg';
+import React, {useCallback, useEffect, useState } from 'react';
 import './App.css';
+import { getProducts } from './utils/marketplace';
+import { login } from './utils/near';
+
+import { Buffer } from 'buffer';
+
+
+
+global.Buffer = Buffer;
+
 
 function App() {
+  const account = window.walletConnection.account();
+  const [products, setProducts] = useState([]);
+  const fetchProducts = useCallback(async () => {
+    if (account.accountId) {
+      setProducts(await getProducts());
+    }
+  });
+  useEffect(() => {
+    fetchProducts();
+  }, []);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      {account.accountId ? (
+        products.forEach((product) => console.log(product))
+      ) : (
+        <button onClick={login}>CONNECT WALLET</button>
+      )}
+    </>
   );
 }
 
